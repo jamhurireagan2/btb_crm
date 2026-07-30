@@ -776,7 +776,7 @@ if ($search_term) {
                 <div class="brand-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <span>BTB Insurance</span>
+                <span>Client Management System</span>
             </div>
         </div>
         <div class="nav-right">
