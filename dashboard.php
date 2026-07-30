@@ -1003,7 +1003,7 @@ if ($search_term) {
 
         <!-- Footer -->
         <footer class="content-footer">
-            <p>&copy; <?= date('Y') ?> <strong>BTB Insurance Brokers Ltd</strong>. All rights reserved.</p>
+            <p>&copy; <?= date('Y') ?> <strong>Client Management System</strong>. All rights reserved.</p>
             <p class="footer-version">v3.0 <span class="dot">•</span> Premium</p>
         </footer>
     </main>

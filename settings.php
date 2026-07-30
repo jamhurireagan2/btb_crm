@@ -611,7 +611,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'clients') {
                 <div class="brand-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <span>BTB Insurance</span>
+                <span>Client Management System</span>
             </div>
         </div>
         <div class="nav-right">
@@ -766,7 +766,7 @@ if (isset($_GET['export']) && $_GET['export'] == 'clients') {
 
         <!-- Footer -->
         <footer class="content-footer">
-            <p>&copy; <?= date('Y') ?> <strong>BTB Insurance Brokers Ltd</strong>. All rights reserved.</p>
+            <p>&copy; <?= date('Y') ?> <strong>Client Management System</strong>. All rights reserved.</p>
             <p class="footer-version">v3.0 <span class="dot">•</span> Settings</p>
         </footer>
     </main>

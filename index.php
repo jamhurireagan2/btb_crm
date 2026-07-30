@@ -24,7 +24,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="brand-icon">
                     <i class="fas fa-shield-alt"></i>
                 </div>
-                <span>BTB Insurance</span>
+                <span>Client Management System</span>
             </div>
             <div class="nav-links">
                 <a href="#features">Features</a>
