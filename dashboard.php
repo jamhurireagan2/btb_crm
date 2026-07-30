@@ -3,7 +3,7 @@ require_once 'config/database.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: index.php');
+    header('Location: login.php');
     exit;
 }
 
@@ -74,6 +74,9 @@ if ($search_term) {
                 <div class="user-avatar">
                     <?= strtoupper(substr($_SESSION['username'] ?? 'A', 0, 1)) ?>
                 </div>
+                <button class="theme-toggle-nav" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
                 <a href="logout.php" class="logout-btn" title="Logout">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
@@ -271,7 +274,7 @@ if ($search_term) {
                                         <h3>No clients found</h3>
                                         <p><?= $search_term ? 'No results match your search.' : 'Start by adding your first client!' ?></p>
                                         <?php if(!$search_term): ?>
-                                            <a href="add_client.php" class="btn btn-red">
+                                            <a href="add_client.php" class="btn-red">
                                                 <i class="fas fa-user-plus"></i> Add Client
                                             </a>
                                         <?php endif; ?>
@@ -287,13 +290,25 @@ if ($search_term) {
         <!-- Footer -->
         <footer class="content-footer">
             <p>&copy; <?= date('Y') ?> <strong>BTB Insurance Brokers Ltd</strong>. All rights reserved.</p>
-            <p class="footer-version">v2.0 <span class="dot">•</span> Powered by InfinityFree</p>
+            <p class="footer-version">v3.0 <span class="dot">•</span> Premium</p>
         </footer>
     </main>
 
     <script>
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icons = document.querySelectorAll('.theme-toggle-nav i, .theme-toggle-float i');
+            icons.forEach(icon => {
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            });
         }
 
         // Close sidebar on outside click (mobile)

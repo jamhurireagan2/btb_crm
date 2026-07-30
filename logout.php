@@ -1,6 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header('Location: index.php?msg=Logged out successfully');
+header('Location: login.php?msg=Logged out successfully');
 exit;
 ?>
