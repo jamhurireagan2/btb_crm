@@ -458,12 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Left Side - Brand -->
         <div class="login-brand-section">
             <div class="brand-content">
-                <div class="brand-logo">
-    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" style="height: 50px; margin-bottom: 10px;">
-    <h1 style="font-size: 24px; font-weight: 800; color: white;">Client Management</h1>
-    <p style="font-size: 14px; opacity: 0.8; margin-top: -4px;">System</p>
-</div>
-
+                
                 <div class="brand-tagline">
                     <h2>Welcome Back</h2>
                     <p>Manage your client portfolio with ease and efficiency.</p>
@@ -498,6 +493,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Right Side - Login Form -->
         <div class="login-form-section">
             <div class="form-container">
+                <div class="brand-logo">
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" style="height: 50px; margin-bottom: 10px;">
+    <h1 style="font-size: 24px; font-weight: 800; color: white;">Client Management</h1>
+    <p style="font-size: 14px; opacity: 0.8; margin-top: -4px;">System</p>
+</div>
                 <div class="form-header">
                     <h3>Sign In</h3>
                     <p>Enter your credentials to access your dashboard</p>
