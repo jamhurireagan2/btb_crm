@@ -54,12 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button class="mobile-toggle" onclick="toggleSidebar()">
                 <i class="fas fa-bars"></i>
             </button>
-            <div class="nav-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <span>BTB Insurance</span>
-            </div>
+            <a href="dashboard.php" class="logo-link">
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" height="40">
+</a>
         </div>
         <div class="nav-right">
             <div class="nav-user">
