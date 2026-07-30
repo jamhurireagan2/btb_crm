@@ -7,6 +7,12 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+// Get statistics
+$totalClients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
+$expiringSoon = $pdo->query("SELECT COUNT(*) FROM clients WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND expiry_date >= CURDATE()")->fetchColumn();
+$expired = $pdo->query("SELECT COUNT(*) FROM clients WHERE expiry_date < CURDATE()")->fetchColumn();
+$activePolicies = $totalClients - $expired;
+
 // Handle search
 $search_term = $_GET['search'] ?? '';
 $clients = [];
@@ -23,122 +29,231 @@ if ($search_term) {
     $stmt->execute([$search_param, $search_param, $search_param, $search_param]);
     $clients = $stmt->fetchAll();
 } else {
-    $stmt = $pdo->query("SELECT * FROM clients ORDER BY created_at DESC");
+    $stmt = $pdo->query("SELECT * FROM clients ORDER BY created_at DESC LIMIT 50");
     $clients = $stmt->fetchAll();
 }
-
-// Get statistics
-$totalClients = $pdo->query("SELECT COUNT(*) FROM clients")->fetchColumn();
-$expiringSoon = $pdo->query("SELECT COUNT(*) FROM clients WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY)")->fetchColumn();
 ?>
-<?php include 'includes/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BTB Insurance</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <span>BTB Insurance</span>
+        </div>
 
-<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-    <h2><i class="fas fa-users"></i> Client Records</h2>
-    <a href="add_client.php" class="btn btn-success">
-        <i class="fas fa-user-plus"></i> Add New Client
-    </a>
-</div>
-
-<!-- Statistics Cards -->
-<div class="stats">
-    <div class="stat-card">
-        <h3><?= $totalClients ?></h3>
-        <p><i class="fas fa-users"></i> Total Clients</p>
-    </div>
-    <div class="stat-card" style="border-left-color: #28a745;">
-        <h3><?= $totalClients - $expiringSoon ?></h3>
-        <p><i class="fas fa-check-circle"></i> Active Policies</p>
-    </div>
-    <div class="stat-card" style="border-left-color: #dc3545;">
-        <h3><?= $expiringSoon ?></h3>
-        <p><i class="fas fa-exclamation-triangle"></i> Expiring in 30 Days</p>
-    </div>
-</div>
-
-<!-- Search Feature -->
-<div class="search-box">
-    <form method="GET" style="display: flex; gap: 10px; width: 100%; flex-wrap: wrap;">
-        <input type="text" name="search" placeholder="🔍 Search by Name, Phone, Email, or Policy #" 
-               value="<?= htmlspecialchars($search_term) ?>" style="flex: 1;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search"></i> Search
-        </button>
-        <?php if($search_term): ?>
-            <a href="dashboard.php" class="btn btn-secondary">
-                <i class="fas fa-times"></i> Clear
+        <nav class="sidebar-nav">
+            <a href="dashboard.php" class="active">
+                <i class="fas fa-home"></i>
+                Dashboard
             </a>
-        <?php endif; ?>
-    </form>
-</div>
+            <a href="add_client.php">
+                <i class="fas fa-user-plus"></i>
+                Add Client
+            </a>
+            <a href="#">
+                <i class="fas fa-file-alt"></i>
+                Reports
+            </a>
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </nav>
 
-<div class="table-responsive">
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Full Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Policy #</th>
-                <th>Type</th>
-                <th>Expiry Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if(count($clients) > 0): ?>
-                <?php foreach($clients as $index => $client): 
-                    $isExpiring = strtotime($client['expiry_date']) <= strtotime('+30 days');
-                    $isExpired = strtotime($client['expiry_date']) < time();
-                ?>
-                <tr>
-                    <td><?= $index + 1 ?></td>
-                    <td><strong><?= htmlspecialchars($client['full_name']) ?></strong></td>
-                    <td><?= htmlspecialchars($client['phone']) ?></td>
-                    <td><?= htmlspecialchars($client['email'] ?? 'N/A') ?></td>
-                    <td><code><?= htmlspecialchars($client['policy_number']) ?></code></td>
-                    <td><span class="badge"><?= htmlspecialchars($client['policy_type']) ?></span></td>
-                    <td><?= date('d M Y', strtotime($client['expiry_date'])) ?></td>
-                    <td>
-                        <?php if($isExpired): ?>
-                            <span style="color: #dc3545; font-weight: bold;">⚠️ Expired</span>
-                        <?php elseif($isExpiring): ?>
-                            <span style="color: #ffc107; font-weight: bold;">⏳ Expiring Soon</span>
-                        <?php else: ?>
-                            <span style="color: #28a745; font-weight: bold;">✅ Active</span>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <a href="edit_client.php?id=<?= $client['id'] ?>" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="delete_client.php?id=<?= $client['id'] ?>" class="btn btn-danger btn-sm" 
-                           onclick="return confirm('Are you sure you want to delete this client?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="9">
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <h3>No clients found</h3>
-                            <p><?= $search_term ? 'No results match your search.' : 'Start by adding your first client!' ?></p>
-                            <?php if(!$search_term): ?>
-                                <a href="add_client.php" class="btn btn-success" style="margin-top: 10px;">
-                                    <i class="fas fa-user-plus"></i> Add Client
-                                </a>
-                            <?php endif; ?>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <p class="user-name"><?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?></p>
+                    <p class="user-role">Administrator</p>
+                </div>
+            </div>
+            <a href="logout.php" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="page-title">
+                <h1>Dashboard</h1>
+                <p>Welcome back, <?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?>!</p>
+            </div>
+            <div class="top-bar-actions">
+                <div class="search-box">
+                    <form method="GET" style="display: flex; gap: 10px;">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" name="search" placeholder="Search clients..." 
+                                   value="<?= htmlspecialchars($search_term) ?>">
                         </div>
-                    </td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <?php if($search_term): ?>
+                            <a href="dashboard.php" class="btn btn-secondary">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        <?php endif; ?>
+                    </form>
+                </div>
+                <a href="add_client.php" class="btn btn-success">
+                    <i class="fas fa-user-plus"></i>
+                    Add Client
+                </a>
+            </div>
+        </header>
 
-<?php include 'includes/footer.php'; ?>
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card primary">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><?= number_format($totalClients) ?></h3>
+                    <p>Total Clients</p>
+                </div>
+            </div>
+            <div class="stat-card success">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><?= number_format($activePolicies) ?></h3>
+                    <p>Active Policies</p>
+                </div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><?= number_format($expiringSoon) ?></h3>
+                    <p>Expiring in 30 Days</p>
+                </div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><?= number_format($expired) ?></h3>
+                    <p>Expired Policies</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2><i class="fas fa-list"></i> Client Records</h2>
+                <span class="record-count"><?= count($clients) ?> records</span>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>Phone</th>
+                            <th>Policy #</th>
+                            <th>Type</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if(count($clients) > 0): ?>
+                            <?php foreach($clients as $index => $client): 
+                                $today = new DateTime();
+                                $expiry = new DateTime($client['expiry_date']);
+                                $diff = $today->diff($expiry)->days;
+                                $isExpired = $expiry < $today;
+                                $isExpiring = !$isExpired && $diff <= 30;
+                            ?>
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td>
+                                    <div class="client-name">
+                                        <div class="client-avatar">
+                                            <?= strtoupper(substr($client['full_name'], 0, 1)) ?>
+                                        </div>
+                                        <span><?= htmlspecialchars($client['full_name']) ?></span>
+                                    </div>
+                                </td>
+                                <td><?= htmlspecialchars($client['phone']) ?></td>
+                                <td><code class="policy-code"><?= htmlspecialchars($client['policy_number']) ?></code></td>
+                                <td><span class="badge"><?= htmlspecialchars($client['policy_type']) ?></span></td>
+                                <td><?= date('d M Y', strtotime($client['expiry_date'])) ?></td>
+                                <td>
+                                    <?php if($isExpired): ?>
+                                        <span class="status-badge expired">Expired</span>
+                                    <?php elseif($isExpiring): ?>
+                                        <span class="status-badge expiring">Expiring Soon</span>
+                                    <?php else: ?>
+                                        <span class="status-badge active">Active</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <a href="edit_client.php?id=<?= $client['id'] ?>" class="btn-action edit" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="delete_client.php?id=<?= $client['id'] ?>" class="btn-action delete" 
+                                           onclick="return confirm('Are you sure you want to delete this client?')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="8">
+                                    <div class="empty-state">
+                                        <i class="fas fa-inbox"></i>
+                                        <h3>No clients found</h3>
+                                        <p><?= $search_term ? 'No results match your search.' : 'Start by adding your first client!' ?></p>
+                                        <?php if(!$search_term): ?>
+                                            <a href="add_client.php" class="btn btn-success" style="margin-top: 15px;">
+                                                <i class="fas fa-user-plus"></i> Add Client
+                                            </a>
+                                        <?php endif; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="content-footer">
+            <p>&copy; <?= date('Y') ?> BTB Insurance Brokers Ltd. All rights reserved.</p>
+            <p class="footer-version">v2.0</p>
+        </footer>
+    </main>
+</body>
+</html>
