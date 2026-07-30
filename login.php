@@ -463,8 +463,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <div>
-                        <h1>BTB Insurance</h1>
-                        <p>Brokers Ltd</p>
+                        <h1>Client Management System</h1>
+                        <p>Streamline your client management process</p>
                     </div>
                 </div>
 
