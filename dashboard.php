@@ -40,145 +40,164 @@ if ($search_term) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - BTB Insurance</title>
     <link rel="stylesheet" href="assets/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-brand">
-            <div class="brand-icon">
-                <i class="fas fa-shield-alt"></i>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <button class="mobile-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="nav-brand">
+                <div class="brand-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>BTB Insurance</span>
             </div>
-            <span>BTB Insurance</span>
         </div>
+        <div class="nav-right">
+            <div class="nav-search">
+                <form method="GET">
+                    <i class="fas fa-search"></i>
+                    <input type="text" name="search" placeholder="Search clients..." 
+                           value="<?= htmlspecialchars($search_term) ?>">
+                    <?php if($search_term): ?>
+                        <a href="dashboard.php" class="clear-search"><i class="fas fa-times"></i></a>
+                    <?php endif; ?>
+                    <button type="submit" class="search-btn"><i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+            <div class="nav-user">
+                <span class="user-greeting">Hi, <?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?></span>
+                <div class="user-avatar">
+                    <?= strtoupper(substr($_SESSION['username'] ?? 'A', 0, 1)) ?>
+                </div>
+                <a href="logout.php" class="logout-btn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-        <nav class="sidebar-nav">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-menu">
             <a href="dashboard.php" class="active">
                 <i class="fas fa-home"></i>
-                Dashboard
+                <span>Dashboard</span>
             </a>
             <a href="add_client.php">
                 <i class="fas fa-user-plus"></i>
-                Add Client
+                <span>Add Client</span>
             </a>
             <a href="#">
                 <i class="fas fa-file-alt"></i>
-                Reports
+                <span>Reports</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Renewals</span>
             </a>
             <a href="#">
                 <i class="fas fa-cog"></i>
-                Settings
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <div class="user-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div>
-                    <p class="user-name"><?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?></p>
-                    <p class="user-role">Administrator</p>
-                </div>
-            </div>
-            <a href="logout.php" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
+                <span>Settings</span>
             </a>
         </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
-        <!-- Top Bar -->
-        <header class="top-bar">
-            <div class="page-title">
-                <h1>Dashboard</h1>
-                <p>Welcome back, <?= htmlspecialchars($_SESSION['username'] ?? 'Admin') ?>!</p>
-            </div>
-            <div class="top-bar-actions">
-                <div class="search-box">
-                    <form method="GET" style="display: flex; gap: 10px;">
-                        <div class="search-input-wrapper">
-                            <i class="fas fa-search"></i>
-                            <input type="text" name="search" placeholder="Search clients..." 
-                                   value="<?= htmlspecialchars($search_term) ?>">
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-search"></i>
-                        </button>
-                        <?php if($search_term): ?>
-                            <a href="dashboard.php" class="btn btn-secondary">
-                                <i class="fas fa-times"></i>
-                            </a>
-                        <?php endif; ?>
-                    </form>
-                </div>
-                <a href="add_client.php" class="btn btn-success">
-                    <i class="fas fa-user-plus"></i>
-                    Add Client
-                </a>
-            </div>
-        </header>
-
-        <!-- Statistics Cards -->
+    <main class="main-content" id="mainContent">
+        <!-- Stats Cards -->
         <div class="stats-grid">
-            <div class="stat-card primary">
-                <div class="stat-icon">
+            <div class="stat-card">
+                <div class="stat-icon red">
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-info">
                     <h3><?= number_format($totalClients) ?></h3>
                     <p>Total Clients</p>
                 </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 12%
+                </div>
             </div>
-            <div class="stat-card success">
-                <div class="stat-icon">
+            <div class="stat-card">
+                <div class="stat-icon green">
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="stat-info">
                     <h3><?= number_format($activePolicies) ?></h3>
                     <p>Active Policies</p>
                 </div>
+                <div class="stat-trend up">
+                    <i class="fas fa-arrow-up"></i> 8%
+                </div>
             </div>
-            <div class="stat-card warning">
-                <div class="stat-icon">
+            <div class="stat-card">
+                <div class="stat-icon yellow">
                     <i class="fas fa-clock"></i>
                 </div>
                 <div class="stat-info">
                     <h3><?= number_format($expiringSoon) ?></h3>
                     <p>Expiring in 30 Days</p>
                 </div>
+                <div class="stat-trend down">
+                    <i class="fas fa-arrow-down"></i> 5%
+                </div>
             </div>
-            <div class="stat-card danger">
-                <div class="stat-icon">
+            <div class="stat-card">
+                <div class="stat-icon red-dark">
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div class="stat-info">
                     <h3><?= number_format($expired) ?></h3>
                     <p>Expired Policies</p>
                 </div>
+                <div class="stat-trend down">
+                    <i class="fas fa-arrow-down"></i> 3%
+                </div>
             </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="add_client.php" class="quick-action">
+                <i class="fas fa-user-plus"></i>
+                <span>Add New Client</span>
+            </a>
+            <a href="#" class="quick-action">
+                <i class="fas fa-file-export"></i>
+                <span>Export Report</span>
+            </a>
+            <a href="#" class="quick-action">
+                <i class="fas fa-bell"></i>
+                <span>Renewal Alerts</span>
+            </a>
         </div>
 
         <!-- Client Table -->
         <div class="table-container">
             <div class="table-header">
-                <h2><i class="fas fa-list"></i> Client Records</h2>
-                <span class="record-count"><?= count($clients) ?> records</span>
+                <div>
+                    <h2><i class="fas fa-list"></i> Client Records</h2>
+                    <p class="table-subtitle">Manage your insurance clients</p>
+                </div>
+                <span class="record-count">
+                    <i class="fas fa-database"></i> <?= count($clients) ?> records
+                </span>
             </div>
 
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Full Name</th>
-                            <th>Phone</th>
-                            <th>Policy #</th>
+                            <th>Client</th>
+                            <th>Contact</th>
+                            <th>Policy</th>
                             <th>Type</th>
-                            <th>Expiry Date</th>
+                            <th>Expiry</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -193,26 +212,42 @@ if ($search_term) {
                                 $isExpiring = !$isExpired && $diff <= 30;
                             ?>
                             <tr>
-                                <td><?= $index + 1 ?></td>
                                 <td>
-                                    <div class="client-name">
+                                    <div class="client-info">
                                         <div class="client-avatar">
                                             <?= strtoupper(substr($client['full_name'], 0, 1)) ?>
                                         </div>
-                                        <span><?= htmlspecialchars($client['full_name']) ?></span>
+                                        <div>
+                                            <div class="client-name"><?= htmlspecialchars($client['full_name']) ?></div>
+                                            <div class="client-email"><?= htmlspecialchars($client['email'] ?? 'No email') ?></div>
+                                        </div>
                                     </div>
                                 </td>
-                                <td><?= htmlspecialchars($client['phone']) ?></td>
-                                <td><code class="policy-code"><?= htmlspecialchars($client['policy_number']) ?></code></td>
-                                <td><span class="badge"><?= htmlspecialchars($client['policy_type']) ?></span></td>
+                                <td>
+                                    <div class="contact-info">
+                                        <div><i class="fas fa-phone"></i> <?= htmlspecialchars($client['phone']) ?></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="policy-code"><?= htmlspecialchars($client['policy_number']) ?></span>
+                                </td>
+                                <td>
+                                    <span class="badge"><?= htmlspecialchars($client['policy_type']) ?></span>
+                                </td>
                                 <td><?= date('d M Y', strtotime($client['expiry_date'])) ?></td>
                                 <td>
                                     <?php if($isExpired): ?>
-                                        <span class="status-badge expired">Expired</span>
+                                        <span class="status-badge expired">
+                                            <i class="fas fa-times-circle"></i> Expired
+                                        </span>
                                     <?php elseif($isExpiring): ?>
-                                        <span class="status-badge expiring">Expiring Soon</span>
+                                        <span class="status-badge expiring">
+                                            <i class="fas fa-clock"></i> <?= $diff ?> days
+                                        </span>
                                     <?php else: ?>
-                                        <span class="status-badge active">Active</span>
+                                        <span class="status-badge active">
+                                            <i class="fas fa-check-circle"></i> Active
+                                        </span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -230,13 +265,13 @@ if ($search_term) {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="7">
                                     <div class="empty-state">
                                         <i class="fas fa-inbox"></i>
                                         <h3>No clients found</h3>
                                         <p><?= $search_term ? 'No results match your search.' : 'Start by adding your first client!' ?></p>
                                         <?php if(!$search_term): ?>
-                                            <a href="add_client.php" class="btn btn-success" style="margin-top: 15px;">
+                                            <a href="add_client.php" class="btn btn-red">
                                                 <i class="fas fa-user-plus"></i> Add Client
                                             </a>
                                         <?php endif; ?>
@@ -251,9 +286,26 @@ if ($search_term) {
 
         <!-- Footer -->
         <footer class="content-footer">
-            <p>&copy; <?= date('Y') ?> BTB Insurance Brokers Ltd. All rights reserved.</p>
-            <p class="footer-version">v2.0</p>
+            <p>&copy; <?= date('Y') ?> <strong>BTB Insurance Brokers Ltd</strong>. All rights reserved.</p>
+            <p class="footer-version">v2.0 <span class="dot">•</span> Powered by InfinityFree</p>
         </footer>
     </main>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('show');
+        }
+
+        // Close sidebar on outside click (mobile)
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+                    sidebar.classList.remove('show');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
