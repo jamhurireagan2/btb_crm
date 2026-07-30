@@ -40,6 +40,26 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </nav>
 
+    <!-- sidebar -->
+     <div class="sidebar-menu">
+    <a href="dashboard.php">
+        <i class="fas fa-home"></i> Dashboard
+    </a>
+    <a href="add_client.php">
+        <i class="fas fa-user-plus"></i> Add Client
+    </a>
+    <a href="reports.php">
+        <i class="fas fa-file-alt"></i> Reports
+    </a>
+    <a href="renewals.php">
+        <i class="fas fa-calendar-alt"></i> Renewals
+    </a>
+    <a href="settings.php">
+        <i class="fas fa-cog"></i> Settings
+    </a>
+</div>
+
+
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-container">
