@@ -2,7 +2,7 @@
 $host = 'sql301.infinityfree.com';
 $dbname = 'if0_42536062_btb_crm';
 $username = 'if0_42536062';
-$password = '';  // Try your InfinityFree account password
+$password = 'gFLvCmEVGi2z';  // Try your InfinityFree account password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
