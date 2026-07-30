@@ -815,13 +815,13 @@ if ($search_term) {
             <a href="add_client.php">
                 <i class="fas fa-user-plus"></i> Add Client
             </a>
-            <a href="#">
+            <a href="reports.php">
                 <i class="fas fa-file-alt"></i> Reports
             </a>
-            <a href="#">
+            <a href="renewals.php">
                 <i class="fas fa-calendar-alt"></i> Renewals
             </a>
-            <a href="#">
+            <a href="settings.php">
                 <i class="fas fa-cog"></i> Settings
             </a>
         </div>
