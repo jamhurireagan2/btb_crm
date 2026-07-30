@@ -459,14 +459,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="login-brand-section">
             <div class="brand-content">
                 <div class="brand-logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div>
-                        <h1>Client Management System</h1>
-                        <p>Streamline your client management process</p>
-                    </div>
-                </div>
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" style="height: 50px; margin-bottom: 10px;">
+    <h1 style="font-size: 24px; font-weight: 800; color: white;">Client Management</h1>
+    <p style="font-size: 14px; opacity: 0.8; margin-top: -4px;">System</p>
+</div>
 
                 <div class="brand-tagline">
                     <h2>Welcome Back</h2>

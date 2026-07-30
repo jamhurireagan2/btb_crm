@@ -20,12 +20,9 @@ if (isset($_SESSION['user_id'])) {
     <!-- Navigation -->
     <nav class="landing-nav">
         <div class="nav-container">
-            <div class="nav-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <span>Client Management System</span>
-            </div>
+            <a href="index.php" class="logo-link">
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" height="40">
+</a>
             <div class="nav-links">
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
