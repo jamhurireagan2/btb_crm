@@ -1930,3 +1930,23 @@ tbody td {
         max-width: 100%;
     }
 }
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-link img {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-link img:hover {
+    transform: scale(1.05);
+}
+
+/* Dark mode - if logo has white background, add this */
+body.dark-mode .logo-link img {
+    filter: brightness(0.9);
+}
