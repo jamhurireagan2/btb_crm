@@ -231,9 +231,9 @@ if (isset($_SESSION['user_id'])) {
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="brand-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
+                     <a href="index.php" class="logo-link">
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" height="40">
+</a>
                     <span>client management system</span>
                     <p>Professional insurance client management platform for brokers and agents.</p>
                 </div>
