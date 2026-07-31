@@ -182,7 +182,7 @@ if (isset($_SESSION['user_id'])) {
             <div class="about-grid">
                 <div class="about-content">
                     <span class="section-tag">About Us</span>
-                    <h2>BTB Insurance Brokers <span class="highlight">Since 2010</span></h2>
+                    <h2>CMS <span class="highlight">Since 2010</span></h2>
                     <p>We provide comprehensive insurance solutions and digital tools to help brokers manage their client relationships efficiently.</p>
                     <ul class="about-list">
                         <li><i class="fas fa-check-circle"></i> Trusted by 500+ clients</li>
@@ -195,8 +195,8 @@ if (isset($_SESSION['user_id'])) {
                 <div class="about-image">
                     <div class="about-card">
                         <i class="fas fa-building"></i>
-                        <h3>BTB Insurance</h3>
-                        <p>Brokers Ltd</p>
+                        <h3>client management system</h3>
+                        <p>stream line your future</p>
                         <div class="about-stats">
                             <div>
                                 <span>15+</span>
@@ -218,7 +218,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="container">
             <div class="cta-content">
                 <h2>Ready to <span class="highlight">Streamline</span> Your Client Management?</h2>
-                <p>Join hundreds of insurance professionals using BTB Insurance platform.</p>
+                <p>Join hundreds of insurance professionals using client management system platform.</p>
                 <a href="login.php" class="btn-primary">
                     <i class="fas fa-arrow-right"></i> Get Started Free
                 </a>
@@ -234,7 +234,7 @@ if (isset($_SESSION['user_id'])) {
                     <div class="brand-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <span>BTB Insurance</span>
+                    <span>client management system</span>
                     <p>Professional insurance client management platform for brokers and agents.</p>
                 </div>
                 <div class="footer-links">
@@ -260,7 +260,7 @@ if (isset($_SESSION['user_id'])) {
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <?= date('Y') ?> BTB Insurance Brokers Ltd. All rights reserved.</p>
+                <p>&copy; <?= date('Y') ?> client management system. All rights reserved.</p>
             </div>
         </div>
     </footer>
