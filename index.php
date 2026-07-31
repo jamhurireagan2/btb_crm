@@ -18,14 +18,29 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body class="landing-page">
 
-    <!-- FULL PAGE VIDEO BACKGROUND -->
-    <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="videos/hero/money.mp4" type="video/mp4">
-            <img src="assets/images/6699608-uhd_3840_25fps.mp4" alt="Money" style="width:100%; height:100%; object-fit:cover;">
+    <!-- ============================================
+     VIDEO BACKGROUND
+     ============================================ -->
+    <div class="video-background" id="videoBackground">
+        <!-- Video Fallback (shows if video doesn't load) -->
+        <div class="video-fallback"></div>
+        
+        <!-- Loading Spinner -->
+        <div class="video-loader" id="videoLoader">
+            <div class="spinner"></div>
+            <span>Loading video...</span>
+        </div>
+        
+        <!-- Video - Using YOUR local video file -->
+        <video autoplay muted loop playsinline id="bgVideo">
+            <!-- YOUR LOCAL VIDEO -->
+            <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
+            <!-- Fallback if local video doesn't work -->
+            <source src="https://videos.pexels.com/video-files/5945101/5945101-uhd_2732_1440_25fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
+        <div class="video-overlay"></div>
     </div>
-    <div class="overlay"></div>
 
     <!-- Navigation -->
     <nav class="landing-nav">

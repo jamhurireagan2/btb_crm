@@ -1967,8 +1967,6 @@ tbody td {
 body.dark-mode .logo-link img {
     filter: brightness(0.9);
 }
-
-
         /* ============================================
            VIDEO BACKGROUND
            ============================================ */
@@ -1982,35 +1980,76 @@ body.dark-mode .logo-link img {
             overflow: hidden;
         }
 
- /* Full Page Video Background */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            overflow: hidden;
-        }
-
         .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             min-width: 100%;
             min-height: 100%;
             width: auto;
             height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
             transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
-        .overlay {
-            position: fixed;
+        .video-overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            z-index: -1;
+            background: rgba(15, 23, 42, 0.75);
+            z-index: 1;
+        }
+
+        /* Fallback image if video doesn't load */
+        .video-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            z-index: 0;
+        }
+
+        /* Loading spinner while video loads */
+        .video-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .video-background.loading .video-loader {
+            display: block;
+        }
+
+        .video-background.loaded .video-loader {
+            display: none;
+        }
+
+        .video-loader .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--red-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Dark mode overlay */
+        body.dark-mode .video-overlay {
+            background: rgba(15, 23, 42, 0.85);
         }
