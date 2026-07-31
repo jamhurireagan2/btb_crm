@@ -304,6 +304,40 @@ if (isset($_SESSION['user_id'])) {
         function toggleMobileMenu() {
             document.querySelector('.nav-links').classList.toggle('show');
         }
+
+                // ============================================
+        // VIDEO LOADING STATE
+        // ============================================
+        const video = document.getElementById('bgVideo');
+        const videoBg = document.getElementById('videoBackground');
+        const loader = document.getElementById('videoLoader');
+
+        video.addEventListener('loadstart', function() {
+            videoBg.classList.add('loading');
+        });
+
+        video.addEventListener('canplay', function() {
+            videoBg.classList.remove('loading');
+            videoBg.classList.add('loaded');
+        });
+
+        video.addEventListener('error', function() {
+            // If video fails to load, show fallback
+            this.style.display = 'none';
+            document.querySelector('.video-fallback').style.display = 'block';
+            videoBg.classList.remove('loading');
+            videoBg.classList.add('loaded');
+        });
+
+        // Force video play on mobile
+        document.addEventListener('touchstart', function() {
+            const video = document.getElementById('bgVideo');
+            if (video.paused) {
+                video.play().catch(function() {
+                    // Auto-play blocked, but that's okay
+                });
+            }
+        });
     </script>
 </body>
 </html>
