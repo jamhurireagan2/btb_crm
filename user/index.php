@@ -23,8 +23,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $client = $stmt->fetch();
 
         if ($client) {
-            // Check if password is set and verify
-            if (!empty($client['user_password']) && password_verify($password, $client['user_password'])) {
+            // Check password - supports both MD5 and bcrypt
+            $password_valid = false;
+            
+            // Check if password is MD5 hash (32 characters hex)
+            if (strlen($client['user_password']) == 32 && ctype_xdigit($client['user_password'])) {
+                // MD5 check
+                if ($client['user_password'] == md5($password)) {
+                    $password_valid = true;
+                }
+            } else {
+                // bcrypt check
+                if (password_verify($password, $client['user_password'])) {
+                    $password_valid = true;
+                }
+            }
+            
+            if ($password_valid) {
                 $_SESSION['user_id'] = $client['id'];
                 $_SESSION['user_name'] = $client['full_name'];
                 $_SESSION['user_policy'] = $client['policy_number'];
@@ -37,27 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: dashboard.php');
                 exit;
             } else {
-                // If password is NULL or empty, set default and try again
-                if (empty($client['user_password'])) {
-                    // Set default password
-                    $default_hash = password_hash('client123', PASSWORD_DEFAULT);
-                    $stmt = $pdo->prepare("UPDATE clients SET user_password = ? WHERE id = ?");
-                    $stmt->execute([$default_hash, $client['id']]);
-                    
-                    // Try login again with default
-                    if (password_verify('client123', $default_hash)) {
-                        $_SESSION['user_id'] = $client['id'];
-                        $_SESSION['user_name'] = $client['full_name'];
-                        $_SESSION['user_policy'] = $client['policy_number'];
-                        $_SESSION['user_type'] = 'client';
-                        
-                        $stmt = $pdo->prepare("UPDATE clients SET last_login = NOW() WHERE id = ?");
-                        $stmt->execute([$client['id']]);
-                        
-                        header('Location: dashboard.php');
-                        exit;
-                    }
-                }
                 $error = 'Invalid policy number or password!';
             }
         } else {
