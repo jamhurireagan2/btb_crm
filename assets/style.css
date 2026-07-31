@@ -1937,8 +1937,8 @@ tbody td {
 }
 
 .logo-link img {
-    height: 45px;
-    width: auto;
+    height: 60px;
+    width: 600px;
     transition: transform 0.3s ease;
 }
 
