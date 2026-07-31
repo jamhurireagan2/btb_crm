@@ -1,22 +1,43 @@
 <?php
-// This file should be run daily via cron job
+// Set error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Load required files
 require_once '../config/database.php';
 require_once '../includes/send_email.php';
 
-// Log file
-$log_file = '../logs/email_log.txt';
-$log_dir = dirname($log_file);
+echo "Starting cron job...\n";
 
-// Create logs directory if it doesn't exist
-if (!file_exists($log_dir)) {
-    mkdir($log_dir, 0777, true);
+// Get clients expiring within 30 days
+$sql = "SELECT * FROM clients 
+        WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY) 
+        AND expiry_date >= CURDATE() 
+        AND email IS NOT NULL 
+        AND email != ''";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$clients = $stmt->fetchAll();
+
+echo "Found " . count($clients) . " clients with expiring policies.\n";
+
+$sent = 0;
+$failed = 0;
+
+foreach ($clients as $client) {
+    echo "Processing: " . $client['full_name'] . " (" . $client['email'] . ")\n";
+    
+    $result = sendRenewalReminder($client);
+    
+    if ($result) {
+        $sent++;
+        echo "  ✅ Email sent\n";
+    } else {
+        $failed++;
+        echo "  ❌ Failed to send\n";
+    }
 }
 
-// Check and send renewal emails
-$result = checkAndSendRenewals();
-
-$log_message = date('Y-m-d H:i:s') . " - Sent: {$result['sent']}, Failed: {$result['failed']}\n";
-file_put_contents($log_file, $log_message, FILE_APPEND);
-
-echo "Renewal reminders sent: {$result['sent']}, Failed: {$result['failed']}\n";
+echo "Renewal reminders sent: $sent, Failed: $failed\n";
 ?>
