@@ -953,22 +953,17 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body class="landing-page">
 
-    <!-- ============================================
-     VIDEO BACKGROUND
-     ============================================ -->
-    <div class="video-background" id="videoBackground">
-        <div class="video-fallback"></div>
-        <div class="video-loader" id="videoLoader">
-            <div class="spinner"></div>
-            <span>Loading video...</span>
-        </div>
-        <video autoplay muted loop playsinline id="bgVideo">
-            <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
-            <source src="https://videos.pexels.com/video-files/5945101/5945101-uhd_2732_1440_25fps.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="video-overlay"></div>
-    </div>
+<!-- VIDEO BACKGROUND -->
+<div class="video-background" id="videoBackground">
+    <div class="video-fallback"></div>
+    <video autoplay muted loop playsinline id="bgVideo" style="width:100%;height:100%;object-fit:cover;">
+        <!-- Working lightweight video from Coverr -->
+        <source src="https://cdn.coverr.co/videos/coverr-city-traffic-1580/720p.mp4" type="video/mp4">
+        <!-- Your local video as fallback -->
+        <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+</div>
 
     <!-- Navigation -->
     <nav class="landing-nav">
