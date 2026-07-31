@@ -669,21 +669,12 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body class="landing-page">
 
-    <!-- ============================================
-     VIDEO BACKGROUND - WORKING VERSION
-     ============================================ -->
-    <div class="video-background" id="videoBackground">
-        <div class="video-fallback"></div>
-        <video autoplay muted loop playsinline id="bgVideo">
-            <!-- WORKING VIDEO FROM COVERR (lightweight) -->
-            <source src="https://cdn.coverr.co/videos/coverr-city-traffic-1580/720p.mp4" type="video/mp4">
-            <!-- YOUR LOCAL VIDEO -->
-            <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
-            <!-- FALLBACK -->
-            <source src="https://videos.pexels.com/video-files/5945101/5945101-uhd_2732_1440_25fps.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay"></div>
-    </div>
+   <div class="video-background">
+    <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+</div>
 
     <!-- Navigation -->
     <nav class="landing-nav">
