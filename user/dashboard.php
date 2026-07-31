@@ -481,6 +481,29 @@ $isExpiring = !$isExpired && $diff <= 30;
             </span>
         </div>
 
+        <!-- Renewal Alert -->
+<?php 
+$days = $diff; // Already calculated in dashboard
+if (!$isExpired && $days <= 30): 
+?>
+<div style="background: <?= $days <= 7 ? '#fee2e2' : '#fef3c7' ?>; border: 1px solid <?= $days <= 7 ? '#fca5a5' : '#fcd34d' ?>; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+    <div style="font-size: 24px;">
+        <?= $days <= 7 ? '🔴' : '🟡' ?>
+    </div>
+    <div>
+        <strong style="color: <?= $days <= 7 ? '#dc2626' : '#f59e0b' ?>;">
+            <?= $days <= 7 ? '⚠️ URGENT: Your policy expires in ' . $days . ' days!' : '📋 Reminder: Your policy expires in ' . $days . ' days' ?>
+        </strong>
+        <p style="font-size: 14px; color: #475569; margin-top: 2px;">
+            Please contact us to renew your policy.
+            <?php if ($days <= 7): ?>
+                <strong>Immediate action required!</strong>
+            <?php endif; ?>
+        </p>
+    </div>
+</div>
+<?php endif; ?>
+
         <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
