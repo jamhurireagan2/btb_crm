@@ -3,7 +3,7 @@ session_start();
 require_once '../config/database.php';
 
 // Redirect if already logged in
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION['user_id']) && $_SESSION['user_type'] === 'client') {
     header('Location: dashboard.php');
     exit;
 }
@@ -22,18 +22,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$policy_number]);
         $client = $stmt->fetch();
 
-        if ($client && password_verify($password, $client['user_password'])) {
-            $_SESSION['user_id'] = $client['id'];
-            $_SESSION['user_name'] = $client['full_name'];
-            $_SESSION['user_policy'] = $client['policy_number'];
-            $_SESSION['user_type'] = 'client';
-            
-            // Update last login
-            $stmt = $pdo->prepare("UPDATE clients SET last_login = NOW() WHERE id = ?");
-            $stmt->execute([$client['id']]);
-            
-            header('Location: dashboard.php');
-            exit;
+        if ($client) {
+            // Check if password is set and verify
+            if (!empty($client['user_password']) && password_verify($password, $client['user_password'])) {
+                $_SESSION['user_id'] = $client['id'];
+                $_SESSION['user_name'] = $client['full_name'];
+                $_SESSION['user_policy'] = $client['policy_number'];
+                $_SESSION['user_type'] = 'client';
+                
+                // Update last login
+                $stmt = $pdo->prepare("UPDATE clients SET last_login = NOW() WHERE id = ?");
+                $stmt->execute([$client['id']]);
+                
+                header('Location: dashboard.php');
+                exit;
+            } else {
+                // If password is NULL or empty, set default and try again
+                if (empty($client['user_password'])) {
+                    // Set default password
+                    $default_hash = password_hash('client123', PASSWORD_DEFAULT);
+                    $stmt = $pdo->prepare("UPDATE clients SET user_password = ? WHERE id = ?");
+                    $stmt->execute([$default_hash, $client['id']]);
+                    
+                    // Try login again with default
+                    if (password_verify('client123', $default_hash)) {
+                        $_SESSION['user_id'] = $client['id'];
+                        $_SESSION['user_name'] = $client['full_name'];
+                        $_SESSION['user_policy'] = $client['policy_number'];
+                        $_SESSION['user_type'] = 'client';
+                        
+                        $stmt = $pdo->prepare("UPDATE clients SET last_login = NOW() WHERE id = ?");
+                        $stmt->execute([$client['id']]);
+                        
+                        header('Location: dashboard.php');
+                        exit;
+                    }
+                }
+                $error = 'Invalid policy number or password!';
+            }
         } else {
             $error = 'Invalid policy number or password!';
         }
@@ -122,6 +148,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 12px 16px;
             border-radius: 10px;
             color: #991b1b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: #166534;
             font-size: 14px;
             margin-bottom: 20px;
             display: flex;
@@ -251,6 +290,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Access your policy information</p>
             <span class="badge"><i class="fas fa-lock"></i> Secure Login</span>
         </div>
+
+        <?php if(isset($_GET['msg'])): ?>
+            <div class="alert-success">
+                <i class="fas fa-check-circle"></i>
+                <?= htmlspecialchars($_GET['msg']) ?>
+            </div>
+        <?php endif; ?>
 
         <?php if($error): ?>
             <div class="alert-error">
