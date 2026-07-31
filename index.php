@@ -669,9 +669,16 @@ if (isset($_SESSION['user_id'])) {
 </head>
 <body class="landing-page">
 
-   <div class="video-background">
-    <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
-        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  <!-- VIDEO BACKGROUND - WORKING BUSINESS VIDEO -->
+<div class="video-background" id="videoBackground">
+    <div class="video-fallback"></div>
+    <video autoplay muted loop playsinline id="bgVideo" style="width:100%;height:100%;object-fit:cover;">
+        <!-- WORKING BUSINESS/OFFICE VIDEO FROM COVERR -->
+        <source src="https://cdn.coverr.co/videos/coverr-modern-office-1665/720p.mp4" type="video/mp4">
+        <!-- FALLBACK - Another business video -->
+        <source src="https://cdn.coverr.co/videos/coverr-working-in-a-modern-office-1912/720p.mp4" type="video/mp4">
+        <!-- Another business-related fallback -->
+        <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-city-1879/720p.mp4" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
 </div>
