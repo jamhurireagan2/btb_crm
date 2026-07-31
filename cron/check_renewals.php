@@ -1,15 +1,13 @@
 <?php
-// Set error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Load required files
 require_once '../config/database.php';
 require_once '../includes/send_email.php';
 
 echo "Starting cron job...\n";
 
-// Get clients expiring within 30 days
+// Get clients expiring within 30 days with emails
 $sql = "SELECT * FROM clients 
         WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY) 
         AND expiry_date >= CURDATE() 
