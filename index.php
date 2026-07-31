@@ -17,6 +17,16 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="landing-page">
+
+    <!-- FULL PAGE VIDEO BACKGROUND -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="videos/hero/money.mp4" type="video/mp4">
+            <img src="https://images.pexels.com/photos/4386424/pexels-photo-4386424.jpeg" alt="Money" style="width:100%; height:100%; object-fit:cover;">
+        </video>
+    </div>
+    <div class="overlay"></div>
+    
     <!-- Navigation -->
     <nav class="landing-nav">
         <div class="nav-container">
