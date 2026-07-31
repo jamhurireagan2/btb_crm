@@ -1938,7 +1938,7 @@ tbody td {
 
 .logo-link img {
     height: 60px;
-    width: 600px;
+    width: auto;
     transition: transform 0.3s ease;
 }
 
