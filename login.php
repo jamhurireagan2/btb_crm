@@ -495,7 +495,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-container">
                 <div class="form-header">
                           <div class="brand-logo">
-    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" style="height: 50px; margin-bottom: 30px;">
+    <img src="assets/images/cms-logo-red-white.png" alt="Client Management System" style="height: 60px; margin-bottom: 50px;">
 </div>
                     <h3>Sign In</h3>
                     <p>Enter your credentials to access your dashboard</p>
