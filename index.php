@@ -1,6 +1,5 @@
 <?php
 session_start();
-// If already logged in, redirect to dashboard
 if (isset($_SESSION['user_id'])) {
     header('Location: dashboard.php');
     exit;
@@ -61,51 +60,12 @@ if (isset($_SESSION['user_id'])) {
             z-index: 0;
         }
 
-        .video-loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            color: white;
-            font-size: 14px;
-            text-align: center;
-            display: none;
-        }
-
-        .video-background.loading .video-loader {
-            display: block;
-        }
-
-        .video-background.loaded .video-loader {
-            display: none;
-        }
-
-        .video-loader .spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: #dc2626;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         body.dark-mode .video-overlay {
             background: rgba(15, 23, 42, 0.85);
         }
 
-        /* Landing Page */
-        .landing-page {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* Rest of your CSS... */
+        .landing-page { position: relative; z-index: 1; }
         .landing-nav {
             position: fixed;
             top: 0;
@@ -113,18 +73,15 @@ if (isset($_SESSION['user_id'])) {
             right: 0;
             height: 70px;
             background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid var(--gray-200, #e2e8f0);
+            border-bottom: 1px solid #e2e8f0;
             z-index: 1000;
             padding: 0 24px;
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
-
         body.dark-mode .landing-nav {
             background: rgba(15, 23, 42, 0.95);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -133,99 +90,75 @@ if (isset($_SESSION['user_id'])) {
             justify-content: space-between;
             height: 100%;
         }
-
         .logo-link {
             display: flex;
             align-items: center;
             text-decoration: none;
         }
-
         .logo-link img {
             height: 40px;
             width: auto;
-            object-fit: contain;
         }
-
         .nav-links {
             display: flex;
             align-items: center;
             gap: 24px;
         }
-
         .nav-links a {
             text-decoration: none;
-            color: var(--gray-600, #475569);
+            color: #475569;
             font-weight: 500;
-            transition: all 0.3s ease;
             font-size: 14px;
+            transition: all 0.3s ease;
         }
-
         body.dark-mode .nav-links a {
             color: rgba(255, 255, 255, 0.7);
         }
-
         .nav-links a:hover {
             color: #dc2626;
         }
-
-        body.dark-mode .nav-links a:hover {
-            color: white;
-        }
-
         .btn-login {
             padding: 8px 24px;
             background: linear-gradient(135deg, #dc2626, #b91c1c);
             color: white !important;
             border-radius: 9999px;
-            transition: all 0.3s ease;
             font-weight: 600;
         }
-
         .btn-login:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(220, 38, 38, 0.35);
             color: white !important;
         }
-
         .theme-toggle {
             background: none;
             border: none;
             font-size: 18px;
             cursor: pointer;
-            color: var(--gray-600, #475569);
+            color: #475569;
             padding: 8px;
             border-radius: 50%;
-            transition: all 0.3s ease;
             width: 38px;
             height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         body.dark-mode .theme-toggle {
             color: rgba(255, 255, 255, 0.7);
         }
-
         .theme-toggle:hover {
-            background: var(--gray-100, #f1f5f9);
+            background: #f1f5f9;
         }
-
-        body.dark-mode .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
         .mobile-menu-btn {
             display: none;
             background: none;
             border: none;
             font-size: 22px;
             cursor: pointer;
-            color: var(--gray-900, #0f172a);
+            color: #0f172a;
             padding: 4px 8px;
             border-radius: 8px;
         }
-
         body.dark-mode .mobile-menu-btn {
             color: white;
         }
@@ -237,7 +170,6 @@ if (isset($_SESSION['user_id'])) {
             padding: 100px 24px 60px;
             position: relative;
         }
-
         .hero-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -247,7 +179,6 @@ if (isset($_SESSION['user_id'])) {
             align-items: center;
             width: 100%;
         }
-
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -261,7 +192,6 @@ if (isset($_SESSION['user_id'])) {
             font-weight: 600;
             margin-bottom: 20px;
         }
-
         .hero-content h1 {
             font-size: 48px;
             font-weight: 800;
@@ -270,11 +200,9 @@ if (isset($_SESSION['user_id'])) {
             color: white;
             letter-spacing: -0.5px;
         }
-
         .hero-content h1 .highlight {
             color: #dc2626;
         }
-
         .hero-content p {
             font-size: 18px;
             color: rgba(255, 255, 255, 0.7);
@@ -282,14 +210,12 @@ if (isset($_SESSION['user_id'])) {
             max-width: 480px;
             line-height: 1.7;
         }
-
         .hero-buttons {
             display: flex;
             gap: 16px;
             margin-bottom: 48px;
             flex-wrap: wrap;
         }
-
         .btn-primary {
             display: inline-flex;
             align-items: center;
@@ -306,13 +232,11 @@ if (isset($_SESSION['user_id'])) {
             cursor: pointer;
             box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
         }
-
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(220, 38, 38, 0.5);
             color: white;
         }
-
         .btn-secondary {
             display: inline-flex;
             align-items: center;
@@ -328,47 +252,39 @@ if (isset($_SESSION['user_id'])) {
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
-
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.25);
             color: white;
             transform: translateY(-2px);
         }
-
         .hero-stats {
             display: flex;
             gap: 48px;
         }
-
         .hero-stats .stat-item h3 {
             font-size: 32px;
             font-weight: 700;
             color: white;
         }
-
         .hero-stats .stat-item p {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
             margin-bottom: 0;
         }
-
         .hero-visual {
             display: flex;
             justify-content: center;
         }
-
         .hero-card {
             width: 100%;
             max-width: 400px;
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-
         .card-header {
             display: flex;
             align-items: center;
@@ -377,42 +293,35 @@ if (isset($_SESSION['user_id'])) {
             padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
         .card-dots {
             display: flex;
             gap: 6px;
         }
-
         .card-dots span {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
         }
-
         .card-dots span:first-child { background: #dc2626; }
         .card-dots span:nth-child(2) { background: #f59e0b; }
         .card-dots span:last-child { background: #22c55e; }
-
         .card-header span {
             font-weight: 600;
             color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
         }
-
         .card-body {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-
         .card-stat {
             padding: 12px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .card-stat .stat-label {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.5);
@@ -420,36 +329,24 @@ if (isset($_SESSION['user_id'])) {
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
         .card-stat .stat-value {
             font-size: 24px;
             font-weight: 700;
             color: white;
         }
-
         .card-stat .stat-value.text-warning { color: #f59e0b; }
         .card-stat .stat-value.text-success { color: #22c55e; }
 
-        /* Features Section */
-        .features-section {
+        .features-section, .about-section {
             padding: 80px 24px;
-            background: var(--white, #ffffff);
         }
+        .features-section { background: #ffffff; }
+        body.dark-mode .features-section { background: #0f172a; }
+        .about-section { background: #f8fafc; }
+        body.dark-mode .about-section { background: #0f172a; }
 
-        body.dark-mode .features-section {
-            background: #0f172a;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 48px; }
         .section-tag {
             display: inline-block;
             padding: 4px 16px;
@@ -460,64 +357,48 @@ if (isset($_SESSION['user_id'])) {
             font-weight: 600;
             margin-bottom: 12px;
         }
-
         body.dark-mode .section-tag {
             background: rgba(220, 38, 38, 0.15);
             color: #fca5a5;
         }
-
         .section-header h2 {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 12px;
-            color: var(--gray-900, #0f172a);
+            color: #0f172a;
         }
-
-        body.dark-mode .section-header h2 {
-            color: white;
-        }
-
-        .section-header h2 .highlight {
-            color: #dc2626;
-        }
-
+        body.dark-mode .section-header h2 { color: white; }
+        .section-header h2 .highlight { color: #dc2626; }
         .section-header p {
             font-size: 18px;
-            color: var(--gray-500, #64748b);
+            color: #64748b;
             max-width: 600px;
             margin: 0 auto;
         }
-
-        body.dark-mode .section-header p {
-            color: rgba(255, 255, 255, 0.6);
-        }
+        body.dark-mode .section-header p { color: rgba(255, 255, 255, 0.6); }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
         }
-
         .feature-card {
-            background: var(--gray-50, #f8fafc);
+            background: #f8fafc;
             padding: 32px;
             border-radius: 12px;
-            border: 1px solid var(--gray-200, #e2e8f0);
+            border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
             text-align: center;
         }
-
         body.dark-mode .feature-card {
             background: rgba(255, 255, 255, 0.03);
             border-color: rgba(255, 255, 255, 0.05);
         }
-
         .feature-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border-color: #dc2626;
         }
-
         .feature-icon {
             width: 56px;
             height: 56px;
@@ -530,40 +411,21 @@ if (isset($_SESSION['user_id'])) {
             font-size: 24px;
             margin: 0 auto 16px;
         }
-
         body.dark-mode .feature-icon {
             background: rgba(220, 38, 38, 0.15);
         }
-
         .feature-card h3 {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: var(--gray-900, #0f172a);
+            color: #0f172a;
         }
-
-        body.dark-mode .feature-card h3 {
-            color: white;
-        }
-
+        body.dark-mode .feature-card h3 { color: white; }
         .feature-card p {
-            color: var(--gray-500, #64748b);
+            color: #64748b;
             font-size: 14px;
         }
-
-        body.dark-mode .feature-card p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* About Section */
-        .about-section {
-            padding: 80px 24px;
-            background: var(--gray-50, #f8fafc);
-        }
-
-        body.dark-mode .about-section {
-            background: #0f172a;
-        }
+        body.dark-mode .feature-card p { color: rgba(255, 255, 255, 0.6); }
 
         .about-grid {
             display: grid;
@@ -571,182 +433,119 @@ if (isset($_SESSION['user_id'])) {
             gap: 60px;
             align-items: center;
         }
-
-        .about-content .section-tag {
-            margin-bottom: 16px;
-        }
-
         .about-content h2 {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 16px;
-            color: var(--gray-900, #0f172a);
+            color: #0f172a;
         }
-
-        body.dark-mode .about-content h2 {
-            color: white;
-        }
-
-        .about-content h2 .highlight {
-            color: #dc2626;
-        }
-
+        body.dark-mode .about-content h2 { color: white; }
+        .about-content h2 .highlight { color: #dc2626; }
         .about-content p {
-            color: var(--gray-500, #64748b);
+            color: #64748b;
             font-size: 16px;
             margin-bottom: 24px;
         }
-
-        body.dark-mode .about-content p {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .about-list {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-
+        body.dark-mode .about-content p { color: rgba(255, 255, 255, 0.7); }
+        .about-list { list-style: none; margin-bottom: 32px; }
         .about-list li {
             display: flex;
             align-items: center;
             gap: 12px;
             padding: 8px 0;
-            color: var(--gray-600, #475569);
+            color: #475569;
         }
-
-        body.dark-mode .about-list li {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .about-list li i {
-            color: #dc2626;
-        }
-
-        .about-image {
-            display: flex;
-            justify-content: center;
-        }
-
+        body.dark-mode .about-list li { color: rgba(255, 255, 255, 0.7); }
+        .about-list li i { color: #dc2626; }
         .about-card {
-            background: var(--white, #ffffff);
+            background: white;
             padding: 40px;
             border-radius: 12px;
-            border: 1px solid var(--gray-200, #e2e8f0);
+            border: 1px solid #e2e8f0;
             text-align: center;
             max-width: 350px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
         body.dark-mode .about-card {
             background: #1e293b;
             border-color: #334155;
         }
-
         .about-card i {
             font-size: 48px;
             color: #dc2626;
             margin-bottom: 12px;
         }
-
         .about-card h3 {
             font-size: 20px;
             font-weight: 700;
-            color: var(--gray-900, #0f172a);
-            text-transform: uppercase;
+            color: #0f172a;
         }
-
-        body.dark-mode .about-card h3 {
-            color: white;
-        }
-
+        body.dark-mode .about-card h3 { color: white; }
         .about-card p {
-            color: var(--gray-500, #64748b);
+            color: #64748b;
             margin-bottom: 24px;
         }
-
-        body.dark-mode .about-card p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
+        body.dark-mode .about-card p { color: rgba(255, 255, 255, 0.6); }
         .about-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
         }
-
         .about-stats div {
             padding: 12px;
-            background: var(--gray-50, #f8fafc);
+            background: #f8fafc;
             border-radius: 8px;
         }
-
         body.dark-mode .about-stats div {
             background: rgba(255, 255, 255, 0.05);
         }
-
         .about-stats span {
             display: block;
             font-size: 24px;
             font-weight: 700;
             color: #dc2626;
         }
-
         .about-stats p {
             font-size: 12px;
-            color: var(--gray-500, #64748b);
+            color: #64748b;
             margin-bottom: 0;
         }
 
-        body.dark-mode .about-stats p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* CTA Section */
         .cta-section {
             padding: 80px 24px;
             background: linear-gradient(135deg, #dc2626, #b91c1c);
         }
-
         .cta-content {
             text-align: center;
             color: white;
         }
-
         .cta-content h2 {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 16px;
         }
-
-        .cta-content h2 .highlight {
-            color: #fca5a5;
-        }
-
+        .cta-content h2 .highlight { color: #fca5a5; }
         .cta-content p {
             font-size: 18px;
             opacity: 0.9;
             margin-bottom: 32px;
         }
-
         .cta-content .btn-primary {
             background: white;
             color: #dc2626;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-
         .cta-content .btn-primary:hover {
             background: white;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             color: #dc2626;
         }
 
-        /* Footer */
         .landing-footer {
             background: #0f172a;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding: 48px 24px 24px;
         }
-
         .footer-grid {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -754,33 +553,24 @@ if (isset($_SESSION['user_id'])) {
             max-width: 1200px;
             margin: 0 auto 32px;
         }
-
-        .footer-brand .logo-link {
-            margin-bottom: 12px;
-            display: inline-block;
-        }
-
+        .footer-brand .logo-link { margin-bottom: 12px; display: inline-block; }
         .footer-brand span {
             font-size: 18px;
             font-weight: 700;
             display: block;
             color: white;
-            text-transform: uppercase;
         }
-
         .footer-brand p {
             color: rgba(255, 255, 255, 0.5);
             font-size: 14px;
             margin-top: 8px;
         }
-
         .footer-links h4 {
             font-size: 14px;
             font-weight: 600;
             color: white;
             margin-bottom: 12px;
         }
-
         .footer-links a {
             display: block;
             color: rgba(255, 255, 255, 0.5);
@@ -789,16 +579,11 @@ if (isset($_SESSION['user_id'])) {
             padding: 4px 0;
             transition: all 0.3s ease;
         }
-
-        .footer-links a:hover {
-            color: #dc2626;
-        }
-
+        .footer-links a:hover { color: #dc2626; }
         .social-icons {
             display: flex;
             gap: 12px;
         }
-
         .social-icons a {
             width: 40px;
             height: 40px;
@@ -811,12 +596,10 @@ if (isset($_SESSION['user_id'])) {
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
         .social-icons a:hover {
             background: #dc2626;
             color: white;
         }
-
         .footer-bottom {
             max-width: 1200px;
             margin: 0 auto;
@@ -827,44 +610,20 @@ if (isset($_SESSION['user_id'])) {
             font-size: 14px;
         }
 
-        /* Responsive */
         @media (max-width: 1024px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content p {
-                margin: 0 auto 32px;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-            .hero-stats {
-                justify-content: center;
-            }
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .about-list {
-                text-align: left;
-                display: inline-block;
-            }
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .hero-content h1 {
-                font-size: 42px;
-            }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-content p { margin: 0 auto 32px; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .about-list { text-align: left; display: inline-block; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-content h1 { font-size: 42px; }
         }
 
         @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
+            .mobile-menu-btn { display: block; }
             .nav-links {
                 display: none;
                 position: absolute;
@@ -874,96 +633,57 @@ if (isset($_SESSION['user_id'])) {
                 background: white;
                 flex-direction: column;
                 padding: 20px;
-                border-bottom: 1px solid var(--gray-200, #e2e8f0);
+                border-bottom: 1px solid #e2e8f0;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             }
             body.dark-mode .nav-links {
                 background: #1e293b;
                 border-color: #334155;
             }
-            .nav-links.show {
-                display: flex;
-            }
-            .hero-content h1 {
-                font-size: 32px;
-            }
-            .hero-stats {
-                gap: 24px;
-            }
-            .hero-stats .stat-item h3 {
-                font-size: 24px;
-            }
-            .section-header h2 {
-                font-size: 28px;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .social-icons {
-                justify-content: center;
-            }
-            .hero-card {
-                max-width: 100%;
-            }
-            .card-body {
-                grid-template-columns: 1fr 1fr;
-            }
-            .logo-link img {
-                height: 32px;
-            }
+            .nav-links.show { display: flex; }
+            .hero-content h1 { font-size: 32px; }
+            .hero-stats { gap: 24px; }
+            .hero-stats .stat-item h3 { font-size: 24px; }
+            .section-header h2 { font-size: 28px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .social-icons { justify-content: center; }
+            .hero-card { max-width: 100%; }
+            .card-body { grid-template-columns: 1fr 1fr; }
+            .logo-link img { height: 32px; }
         }
 
         @media (max-width: 480px) {
-            .hero-card {
-                padding: 16px;
-            }
-            .card-body {
-                grid-template-columns: 1fr;
-            }
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
+            .hero-card { padding: 16px; }
+            .card-body { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; align-items: center; }
             .hero-buttons .btn-primary,
-            .hero-buttons .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-            .hero-content h1 {
-                font-size: 28px;
-            }
-            .cta-content h2 {
-                font-size: 28px;
-            }
-            .logo-link img {
-                height: 28px;
-            }
-            .about-card {
-                padding: 24px;
-            }
+            .hero-buttons .btn-secondary { width: 100%; justify-content: center; }
+            .hero-content h1 { font-size: 28px; }
+            .cta-content h2 { font-size: 28px; }
+            .logo-link img { height: 28px; }
+            .about-card { padding: 24px; }
         }
     </style>
 </head>
 <body class="landing-page">
 
-<!-- VIDEO BACKGROUND -->
-<div class="video-background" id="videoBackground">
-    <div class="video-fallback"></div>
-    <video autoplay muted loop playsinline id="bgVideo" style="width:100%;height:100%;object-fit:cover;">
-        <!-- Working lightweight video from Coverr -->
-        <source src="https://cdn.coverr.co/videos/coverr-city-traffic-1580/720p.mp4" type="video/mp4">
-        <!-- Your local video as fallback -->
-        <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay"></div>
-</div>
+    <!-- ============================================
+     VIDEO BACKGROUND - WORKING VERSION
+     ============================================ -->
+    <div class="video-background" id="videoBackground">
+        <div class="video-fallback"></div>
+        <video autoplay muted loop playsinline id="bgVideo">
+            <!-- WORKING VIDEO FROM COVERR (lightweight) -->
+            <source src="https://cdn.coverr.co/videos/coverr-city-traffic-1580/720p.mp4" type="video/mp4">
+            <!-- YOUR LOCAL VIDEO -->
+            <source src="assets/images/6699608-uhd_2160_3840_25fps.mp4" type="video/mp4">
+            <!-- FALLBACK -->
+            <source src="https://videos.pexels.com/video-files/5945101/5945101-uhd_2732_1440_25fps.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
 
     <!-- Navigation -->
     <nav class="landing-nav">
@@ -1198,7 +918,6 @@ if (isset($_SESSION['user_id'])) {
             document.getElementById('navLinks').classList.toggle('show');
         }
 
-        // Close mobile menu on link click
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('show');
@@ -1206,49 +925,21 @@ if (isset($_SESSION['user_id'])) {
         });
 
         // ============================================
-        // VIDEO LOADING STATE
+        // VIDEO - FORCE PLAY
         // ============================================
-        const video = document.getElementById('bgVideo');
-        const videoBg = document.getElementById('videoBackground');
-        const loader = document.getElementById('videoLoader');
-
-        video.addEventListener('loadstart', function() {
-            videoBg.classList.add('loading');
-        });
-
-        video.addEventListener('canplay', function() {
-            videoBg.classList.remove('loading');
-            videoBg.classList.add('loaded');
-        });
-
-        video.addEventListener('error', function() {
-            this.style.display = 'none';
-            document.querySelector('.video-fallback').style.display = 'block';
-            videoBg.classList.remove('loading');
-            videoBg.classList.add('loaded');
-        });
-
-        // Force video play on mobile
-        document.addEventListener('touchstart', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const video = document.getElementById('bgVideo');
-            if (video.paused) {
-                video.play().catch(function() {
-                    // Auto-play blocked, but that's okay
+            
+            // Try to play video
+            video.play().then(() => {
+                console.log('Video playing!');
+            }).catch(error => {
+                console.log('Autoplay blocked:', error);
+                // Add a click listener to play video on user interaction
+                document.addEventListener('click', function playVideo() {
+                    video.play();
+                    document.removeEventListener('click', playVideo);
                 });
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
             });
         });
     </script>
