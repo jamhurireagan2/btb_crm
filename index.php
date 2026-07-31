@@ -22,11 +22,11 @@ if (isset($_SESSION['user_id'])) {
     <div class="video-background">
         <video autoplay muted loop playsinline>
             <source src="videos/hero/money.mp4" type="video/mp4">
-            <img src="https://images.pexels.com/photos/4386424/pexels-photo-4386424.jpeg" alt="Money" style="width:100%; height:100%; object-fit:cover;">
+            <img src="assets/images/6699608-uhd_3840_25fps.mp4" alt="Money" style="width:100%; height:100%; object-fit:cover;">
         </video>
     </div>
     <div class="overlay"></div>
-    
+
     <!-- Navigation -->
     <nav class="landing-nav">
         <div class="nav-container">
