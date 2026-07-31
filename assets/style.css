@@ -1977,3 +1977,28 @@ body.dark-mode .logo-link img {
         body.dark-mode .video-overlay {
             background: rgba(15, 23, 42, 0.85);
         }
+        .btn-client {
+    padding: 8px 20px;
+    background: transparent;
+    color: #0f172a;
+    border: 2px solid #dc2626;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-client:hover {
+    background: #dc2626;
+    color: white;
+    border-color: #dc2626;
+}
+
+body.dark-mode .btn-client {
+    color: white;
+    border-color: #dc2626;
+}
+
+body.dark-mode .btn-client:hover {
+    background: #dc2626;
+    color: white;
+}

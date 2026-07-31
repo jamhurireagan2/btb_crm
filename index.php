@@ -921,6 +921,7 @@ if (isset($_SESSION['user_id'])) {
                 <img src="assets/images/cms-logo-red-white.png" alt="Client Management System">
             </a>
             <div class="nav-links" id="navLinks">
+                <a href="user/" class="btn-client">Client Portal</a>
                 <a href="#features">Features</a>
                 <a href="#about">About</a>
                 <a href="login.php" class="btn-login">Sign In</a>
