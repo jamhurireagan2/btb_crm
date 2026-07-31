@@ -1934,16 +1934,33 @@ tbody td {
     display: flex;
     align-items: center;
     text-decoration: none;
+    transition: transform 0.3s ease;
+    flex-shrink:0;
 }
 
 .logo-link img {
     height: 70px;
     width: auto;
+    max-width: 250px;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
 .logo-link img:hover {
     transform: scale(1.05);
+}
+
+/* For mobile */
+@media (max-width: 768px) {
+    .logo-link img {
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-link img {
+        height: 35px;
+    }
 }
 
 /* Dark mode - if logo has white background, add this */
