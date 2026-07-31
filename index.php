@@ -52,10 +52,9 @@ if (isset($_SESSION['user_id'])) {
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--gray-900);
+            background: var(--gray-50);
             color: var(--gray-900);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         /* ============================================
@@ -89,7 +88,7 @@ if (isset($_SESSION['user_id'])) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.65);
+            background: rgba(15, 23, 42, 0.75);
             z-index: 1;
         }
 
@@ -105,20 +104,11 @@ if (isset($_SESSION['user_id'])) {
         }
 
         /* ============================================
-           DARK MODE OVERRIDE
-           ============================================ */
-        body.dark-mode .video-overlay {
-            background: rgba(15, 23, 42, 0.85);
-        }
-
-        /* ============================================
            LANDING PAGE
            ============================================ */
         .landing-page {
             position: relative;
             z-index: 1;
-            min-height: 100vh;
-            color: white;
         }
 
         /* Navigation */
@@ -128,19 +118,17 @@ if (isset($_SESSION['user_id'])) {
             left: 0;
             right: 0;
             height: 70px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid var(--gray-200);
             z-index: 1000;
             padding: 0 24px;
+            backdrop-filter: blur(10px);
             transition: var(--transition);
         }
 
-        .landing-nav.scrolled {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        body.dark-mode .landing-nav {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-container {
@@ -152,14 +140,19 @@ if (isset($_SESSION['user_id'])) {
             height: 100%;
         }
 
+        /* YOUR EXISTING LOGO */
         .nav-brand {
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 20px;
             font-weight: 700;
-            color: white;
+            color: var(--gray-900);
             text-decoration: none;
+        }
+
+        body.dark-mode .nav-brand {
+            color: white;
         }
 
         .nav-brand .brand-icon {
@@ -174,6 +167,19 @@ if (isset($_SESSION['user_id'])) {
             font-size: 16px;
         }
 
+        /* LOGO IMAGE - YOUR EXISTING LOGO */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-link img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .nav-links {
             display: flex;
             align-items: center;
@@ -182,13 +188,21 @@ if (isset($_SESSION['user_id'])) {
 
         .nav-links a {
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--gray-600);
             font-weight: 500;
             transition: var(--transition);
             font-size: 14px;
         }
 
+        body.dark-mode .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         .nav-links a:hover {
+            color: var(--red-primary);
+        }
+
+        body.dark-mode .nav-links a:hover {
             color: white;
         }
 
@@ -208,11 +222,11 @@ if (isset($_SESSION['user_id'])) {
         }
 
         .theme-toggle {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: none;
+            border: none;
             font-size: 18px;
             cursor: pointer;
-            color: white;
+            color: var(--gray-600);
             padding: 8px;
             border-radius: 50%;
             transition: var(--transition);
@@ -223,19 +237,31 @@ if (isset($_SESSION['user_id'])) {
             justify-content: center;
         }
 
+        body.dark-mode .theme-toggle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         .theme-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--gray-100);
+        }
+
+        body.dark-mode .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .mobile-menu-btn {
             display: none;
             background: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: none;
             font-size: 22px;
             cursor: pointer;
-            color: white;
-            padding: 6px 12px;
+            color: var(--gray-900);
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
+        }
+
+        body.dark-mode .mobile-menu-btn {
+            color: white;
         }
 
         /* Hero Section */
@@ -257,43 +283,17 @@ if (isset($_SESSION['user_id'])) {
             width: 100%;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: rgba(220, 38, 38, 0.2);
-            border: 1px solid rgba(220, 38, 38, 0.3);
-            color: #fca5a5;
-            border-radius: var(--radius-full);
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
         .hero-content h1 {
-            font-size: 52px;
+            font-size: 48px;
             font-weight: 800;
-            line-height: 1.08;
+            line-height: 1.1;
             margin-bottom: 20px;
             color: white;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
         }
 
         .hero-content h1 .highlight {
             color: var(--red-primary);
-            position: relative;
-        }
-
-        .hero-content h1 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--red-gradient);
-            border-radius: 2px;
         }
 
         .hero-content p {
@@ -314,8 +314,8 @@ if (isset($_SESSION['user_id'])) {
         .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 32px;
+            gap: 8px;
+            padding: 12px 28px;
             background: var(--red-gradient);
             color: white;
             border: none;
@@ -329,8 +329,8 @@ if (isset($_SESSION['user_id'])) {
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(220, 38, 38, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.5);
             color: white;
         }
 
@@ -338,8 +338,8 @@ if (isset($_SESSION['user_id'])) {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 14px 32px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.15);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: var(--radius-sm);
@@ -351,10 +351,9 @@ if (isset($_SESSION['user_id'])) {
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.25);
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .hero-stats {
@@ -374,7 +373,7 @@ if (isset($_SESSION['user_id'])) {
             margin-bottom: 0;
         }
 
-        /* Hero Card */
+        /* Hero Card - Glass Effect */
         .hero-visual {
             display: flex;
             justify-content: center;
@@ -456,10 +455,11 @@ if (isset($_SESSION['user_id'])) {
         /* Features Section */
         .features-section {
             padding: 80px 24px;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
-            position: relative;
-            z-index: 1;
+            background: var(--white);
+        }
+
+        body.dark-mode .features-section {
+            background: var(--gray-900);
         }
 
         .container {
@@ -475,19 +475,27 @@ if (isset($_SESSION['user_id'])) {
         .section-tag {
             display: inline-block;
             padding: 4px 16px;
-            background: rgba(220, 38, 38, 0.15);
-            color: #fca5a5;
-            border: 1px solid rgba(220, 38, 38, 0.2);
+            background: var(--red-light);
+            color: var(--red-primary);
             border-radius: var(--radius-full);
             font-size: 13px;
             font-weight: 600;
             margin-bottom: 12px;
         }
 
+        body.dark-mode .section-tag {
+            background: rgba(220, 38, 38, 0.15);
+            color: #fca5a5;
+        }
+
         .section-header h2 {
             font-size: 36px;
             font-weight: 700;
             margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+
+        body.dark-mode .section-header h2 {
             color: white;
         }
 
@@ -497,9 +505,13 @@ if (isset($_SESSION['user_id'])) {
 
         .section-header p {
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray-500);
             max-width: 600px;
             margin: 0 auto;
+        }
+
+        body.dark-mode .section-header p {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .features-grid {
@@ -509,26 +521,29 @@ if (isset($_SESSION['user_id'])) {
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--gray-50);
             padding: 32px;
             border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--gray-200);
             transition: var(--transition);
             text-align: center;
-            backdrop-filter: blur(10px);
+        }
+
+        body.dark-mode .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         .feature-card:hover {
-            transform: translateY(-6px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(220, 38, 38, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--red-primary);
         }
 
         .feature-icon {
             width: 56px;
             height: 56px;
-            background: rgba(220, 38, 38, 0.15);
+            background: var(--red-light);
             color: var(--red-primary);
             border-radius: var(--radius);
             display: flex;
@@ -538,24 +553,34 @@ if (isset($_SESSION['user_id'])) {
             margin: 0 auto 16px;
         }
 
+        body.dark-mode .feature-icon {
+            background: rgba(220, 38, 38, 0.15);
+        }
+
         .feature-card h3 {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        body.dark-mode .feature-card h3 {
             color: white;
         }
 
         .feature-card p {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--gray-500);
             font-size: 14px;
+        }
+
+        body.dark-mode .feature-card p {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* CTA Section */
         .cta-section {
             padding: 80px 24px;
             background: var(--red-gradient);
-            position: relative;
-            z-index: 1;
         }
 
         .cta-content {
@@ -587,17 +612,15 @@ if (isset($_SESSION['user_id'])) {
 
         .cta-content .btn-primary:hover {
             background: white;
-            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             color: var(--red-primary);
         }
 
         /* Footer */
         .landing-footer {
-            background: rgba(15, 23, 42, 0.95);
+            background: var(--gray-900);
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding: 48px 24px 24px;
-            position: relative;
-            z-index: 1;
         }
 
         .footer-grid {
@@ -670,13 +693,11 @@ if (isset($_SESSION['user_id'])) {
             color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .social-icons a:hover {
             background: var(--red-primary);
             color: white;
-            border-color: var(--red-primary);
         }
 
         .footer-bottom {
@@ -711,11 +732,15 @@ if (isset($_SESSION['user_id'])) {
                 top: 70px;
                 left: 0;
                 right: 0;
-                background: rgba(15, 23, 42, 0.95);
+                background: white;
                 flex-direction: column;
                 padding: 20px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--gray-200);
+                box-shadow: var(--shadow-lg);
+            }
+            body.dark-mode .nav-links {
+                background: var(--gray-800);
+                border-color: var(--gray-700);
             }
             .nav-links.show { display: flex; }
             .hero-content h1 { font-size: 32px; }
@@ -727,6 +752,7 @@ if (isset($_SESSION['user_id'])) {
             .social-icons { justify-content: center; }
             .hero-card { max-width: 100%; }
             .card-body { grid-template-columns: 1fr 1fr; }
+            .logo-link img { height: 32px; }
         }
 
         @media (max-width: 480px) {
@@ -737,6 +763,7 @@ if (isset($_SESSION['user_id'])) {
             .hero-buttons .btn-secondary { width: 100%; justify-content: center; }
             .hero-content h1 { font-size: 28px; }
             .cta-content h2 { font-size: 28px; }
+            .logo-link img { height: 28px; }
         }
     </style>
 </head>
@@ -748,7 +775,7 @@ if (isset($_SESSION['user_id'])) {
         <!-- Video Fallback (shows if video doesn't load) -->
         <div class="video-fallback"></div>
         
-        <!-- Video -->
+        <!-- Video - Autoplay Muted Loop -->
         <video autoplay muted loop playsinline id="bgVideo">
             <!-- Try multiple video sources -->
             <source src="https://videos.pexels.com/video-files/5945101/5945101-uhd_2732_1440_25fps.mp4" type="video/mp4">
@@ -762,15 +789,13 @@ if (isset($_SESSION['user_id'])) {
     </div>
 
     <!-- ============================================
-    NAVIGATION
+    NAVIGATION - YOUR EXISTING LOGO PRESERVED
     ============================================ -->
     <nav class="landing-nav" id="mainNav">
         <div class="nav-container">
-            <a href="index.php" class="nav-brand">
-                <div class="brand-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <span>CMS</span>
+            <!-- YOUR EXISTING LOGO LINK -->
+            <a href="index.php" class="logo-link">
+                <img src="assets/images/cms-logo-red-white.png" alt="Client Management System">
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#features">Features</a>
@@ -792,10 +817,6 @@ if (isset($_SESSION['user_id'])) {
     <section class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fas fa-certificate"></i>
-                    Premium Client Management
-                </div>
                 <h1>Manage Your <span class="highlight">Clients</span> With Confidence</h1>
                 <p>Streamline your client management, track policies, and never miss a renewal with our powerful digital platform.</p>
                 <div class="hero-buttons">
@@ -963,9 +984,11 @@ if (isset($_SESSION['user_id'])) {
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('mainNav');
             if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
             } else {
-                nav.classList.remove('scrolled');
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
             }
         });
 
@@ -975,11 +998,14 @@ if (isset($_SESSION['user_id'])) {
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const icon = document.querySelector('.theme-toggle i');
+            const nav = document.getElementById('mainNav');
             if (document.body.classList.contains('dark-mode')) {
                 icon.className = 'fas fa-sun';
-                document.querySelector('.video-overlay').style.background = 'rgba(15, 23, 42, 0.9)';
+                nav.style.background = 'rgba(15, 23, 42, 0.95)';
+                document.querySelector('.video-overlay').style.background = 'rgba(15, 23, 42, 0.85)';
             } else {
                 icon.className = 'fas fa-moon';
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
                 document.querySelector('.video-overlay').style.background = 'rgba(15, 23, 42, 0.75)';
             }
         }
@@ -1001,9 +1027,11 @@ if (isset($_SESSION['user_id'])) {
         // ============================================
         // VIDEO ERROR HANDLING
         // ============================================
-        document.getElementById('bgVideo').addEventListener('error', function() {
+        const video = document.getElementById('bgVideo');
+        video.addEventListener('error', function() {
             // If video fails to load, show fallback
             this.style.display = 'none';
+            document.querySelector('.video-fallback').style.display = 'block';
         });
 
         // ============================================
@@ -1020,6 +1048,18 @@ if (isset($_SESSION['user_id'])) {
                     });
                 }
             });
+        });
+
+        // ============================================
+        // FORCE VIDEO PLAY ON MOBILE
+        // ============================================
+        document.addEventListener('touchstart', function() {
+            const video = document.getElementById('bgVideo');
+            if (video.paused) {
+                video.play().catch(function() {
+                    // Auto-play blocked, but that's okay
+                });
+            }
         });
     </script>
 </body>
