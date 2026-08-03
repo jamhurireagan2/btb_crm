@@ -46,12 +46,31 @@ function sendEmail($to_email, $to_name, $subject, $html_content) {
     
     $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $error = curl_error($ch);
+    $curl_error = curl_error($ch);
     curl_close($ch);
     
-    // Log for debugging
+    // Log detailed error for debugging
     if ($http_code != 202) {
-        error_log("SendGrid Error: HTTP $http_code - $response");
+        $error_log = "SendGrid Error: HTTP $http_code\n";
+        $error_log .= "Response: " . $response . "\n";
+        $error_log .= "To: $to_email\n";
+        $error_log .= "Subject: $subject\n";
+        
+        // If response contains error message, parse it
+        if ($response) {
+            $response_data = json_decode($response, true);
+            if (isset($response_data['errors'])) {
+                foreach ($response_data['errors'] as $error) {
+                    $error_log .= "Error: " . $error['message'] . "\n";
+                }
+            }
+        }
+        
+        error_log($error_log);
+        file_put_contents('../logs/email_errors.txt', 
+            date('Y-m-d H:i:s') . "\n" . $error_log . str_repeat('-', 60) . "\n", 
+            FILE_APPEND
+        );
     }
     
     return $http_code == 202;
@@ -159,7 +178,8 @@ function checkAndSendRenewals($pdo) {
             WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY) 
             AND expiry_date >= CURDATE() 
             AND email IS NOT NULL 
-            AND email != ''";
+            AND email != '' 
+            AND TRIM(email) != ''";
     
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
