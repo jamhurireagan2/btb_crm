@@ -1,10 +1,15 @@
 <?php
-// Email Configuration - Using Gmail SMTP
+// Email Configuration - SendGrid
 
-// SMTP Settings
-define('SMTP_HOST', 'smtp.gmail.com');
-define('SMTP_PORT', 587);
-define('SMTP_USERNAME', 'your_email@gmail.com'); // <- CHANGE THIS
-define('SMTP_PASSWORD', 'your_app_password'); // <- CHANGE THIS
-define('SMTP_FROM_EMAIL', 'your_email@gmail.com');
-define('SMTP_FROM_NAME', 'Client Management System');
+// SendGrid API Key (Paste your key here)
+define('SENDGRID_API_KEY', 'SG.cdR57_-pSju3KxOfA_4Dw.xuptkSaRO_0WZrdZv7cNW5wefQ0R_JpP-MRyEEjCulo');
+
+// Sender Information - MUST be verified in SendGrid
+define('SENDGRID_FROM_EMAIL', 'your_email@gmail.com'); // <-- CHANGE THIS to your email
+define('SENDGRID_FROM_NAME', 'Client Management System');
+
+// Company Details
+define('COMPANY_PHONE', '0712345678');
+define('COMPANY_EMAIL', 'info@btbinsurance.com');
+define('SITE_URL', 'https://client-managent-ystem.page.gd');
+?>

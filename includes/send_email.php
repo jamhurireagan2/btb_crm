@@ -1,10 +1,9 @@
 <?php
-// Email Configuration - Using SendGrid
+require_once '../config/email.php';
 
-define('SENDGRID_API_KEY', 'YOUR_SENDGRID_API_KEY'); // Replace with your API key
-define('SENDGRID_FROM_EMAIL', 'your_verified_email@gmail.com');
-define('SENDGRID_FROM_NAME', 'Client Management System');
-
+/**
+ * Send email using SendGrid API
+ */
 function sendEmail($to_email, $to_name, $subject, $html_content) {
     $api_key = SENDGRID_API_KEY;
     
@@ -13,14 +12,18 @@ function sendEmail($to_email, $to_name, $subject, $html_content) {
             [
                 'to' => [
                     ['email' => $to_email, 'name' => $to_name]
-                ],
-                'subject' => $subject
+                ]
             ]
         ],
         'from' => [
             'email' => SENDGRID_FROM_EMAIL,
             'name' => SENDGRID_FROM_NAME
         ],
+        'reply_to' => [
+            'email' => COMPANY_EMAIL,
+            'name' => SENDGRID_FROM_NAME
+        ],
+        'subject' => $subject,
         'content' => [
             [
                 'type' => 'text/html',
@@ -38,17 +41,25 @@ function sendEmail($to_email, $to_name, $subject, $html_content) {
     curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         'Authorization: Bearer ' . $api_key,
-        'Content-Type: application/json',
-        'Content-Length: ' . strlen($json)
+        'Content-Type: application/json'
     ]);
     
     $response = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $error = curl_error($ch);
     curl_close($ch);
     
-    return $http_code >= 200 && $http_code < 300;
+    // Log for debugging
+    if ($http_code != 202) {
+        error_log("SendGrid Error: HTTP $http_code - $response");
+    }
+    
+    return $http_code == 202;
 }
 
+/**
+ * Get renewal email template
+ */
 function getRenewalEmailTemplate($client, $days_remaining) {
     $status = $days_remaining <= 7 ? '⚠️ URGENT' : '📋 Reminder';
     $message = $days_remaining <= 7 
@@ -59,14 +70,22 @@ function getRenewalEmailTemplate($client, $days_remaining) {
     <!DOCTYPE html>
     <html>
     <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>Policy Renewal Reminder</title>
         <style>
-            body { font-family: Arial, sans-serif; color: #333; }
+            body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; }
             .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: #dc2626; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+            .header { background: #dc2626; color: white; padding: 25px; text-align: center; border-radius: 10px 10px 0 0; }
+            .header h2 { margin: 0; font-size: 22px; }
             .content { background: #f8fafc; padding: 30px; border-radius: 0 0 10px 10px; }
-            .policy-details { background: white; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #dc2626; }
-            .btn { background: #dc2626; color: white; padding: 10px 25px; text-decoration: none; border-radius: 5px; display: inline-block; }
-            .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #999; }
+            .policy-details { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #dc2626; }
+            .policy-details p { margin: 8px 0; }
+            .btn { background: #dc2626; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; }
+            .footer { text-align: center; margin-top: 20px; font-size: 12px; color: #999; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+            .status-urgent { color: #dc2626; font-weight: bold; }
+            .status-warning { color: #f59e0b; font-weight: bold; }
+            .company-info { margin-top: 20px; padding: 15px; background: #f1f5f9; border-radius: 8px; font-size: 14px; }
         </style>
     </head>
     <body>
@@ -75,30 +94,31 @@ function getRenewalEmailTemplate($client, $days_remaining) {
                 <h2>📋 Policy Renewal Reminder</h2>
             </div>
             <div class='content'>
-                <h3>Hello {$client['full_name']},</h3>
+                <h3>Hello " . htmlspecialchars($client['full_name']) . ",</h3>
                 <p>This is a reminder that your insurance policy is expiring soon.</p>
                 
                 <div class='policy-details'>
-                    <p><strong>Policy Number:</strong> {$client['policy_number']}</p>
-                    <p><strong>Policy Type:</strong> {$client['policy_type']}</p>
+                    <p><strong>Policy Number:</strong> " . htmlspecialchars($client['policy_number']) . "</p>
+                    <p><strong>Policy Type:</strong> " . htmlspecialchars($client['policy_type']) . "</p>
                     <p><strong>Expiry Date:</strong> " . date('d M Y', strtotime($client['expiry_date'])) . "</p>
-                    <p><strong>Days Remaining:</strong> $days_remaining days</p>
+                    <p><strong>Days Remaining:</strong> <span class='" . ($days_remaining <= 7 ? 'status-urgent' : 'status-warning') . "'>$days_remaining days</span></p>
                     <p><strong>Status:</strong> $status</p>
                 </div>
                 
-                <p>$message</p>
+                <p style='font-size: 16px;'>$message</p>
                 
-                <p style='margin-top: 20px;'>
-                    <a href='https://client-managent-ystem.page.gd/user/' class='btn'>View My Policy</a>
+                <p style='margin-top: 25px;'>
+                    <a href='" . SITE_URL . "/user/' class='btn'>🔗 View My Policy</a>
                 </p>
                 
-                <p style='margin-top: 20px; font-size: 14px; color: #666;'>
-                    <strong>📞 Contact Us:</strong> 0712345678<br>
-                    <strong>📧 Email:</strong> info@btbinsurance.com
-                </p>
+                <div class='company-info'>
+                    <p><strong>📞 Need help?</strong> Call us at <strong>" . COMPANY_PHONE . "</strong></p>
+                    <p><strong>📧 Email:</strong> <a href='mailto:" . COMPANY_EMAIL . "' style='color:#dc2626;'>" . COMPANY_EMAIL . "</a></p>
+                </div>
             </div>
             <div class='footer'>
-                <p>&copy; 2024 Client Management System. All rights reserved.</p>
+                <p>&copy; " . date('Y') . " Client Management System. All rights reserved.</p>
+                <p>This is an automated email. Please do not reply directly.</p>
             </div>
         </div>
     </body>
@@ -106,11 +126,15 @@ function getRenewalEmailTemplate($client, $days_remaining) {
     ";
 }
 
+/**
+ * Send renewal reminder to a client
+ */
 function sendRenewalReminder($client) {
     $today = new DateTime();
     $expiry = new DateTime($client['expiry_date']);
     $days_remaining = $today->diff($expiry)->days;
     
+    // Check if email should be sent
     if (empty($client['email']) || $days_remaining <= 0 || $days_remaining > 30) {
         return false;
     }
@@ -124,5 +148,34 @@ function sendRenewalReminder($client) {
         $subject,
         $html
     );
+}
+
+/**
+ * Check and send renewal reminders to all expiring clients
+ */
+function checkAndSendRenewals($pdo) {
+    // Get clients expiring within 30 days with emails
+    $sql = "SELECT * FROM clients 
+            WHERE expiry_date <= DATE_ADD(CURDATE(), INTERVAL 30 DAY) 
+            AND expiry_date >= CURDATE() 
+            AND email IS NOT NULL 
+            AND email != ''";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $clients = $stmt->fetchAll();
+    
+    $sent = 0;
+    $failed = 0;
+    
+    foreach ($clients as $client) {
+        if (sendRenewalReminder($client)) {
+            $sent++;
+        } else {
+            $failed++;
+        }
+    }
+    
+    return ['sent' => $sent, 'failed' => $failed];
 }
 ?>
